@@ -6,12 +6,12 @@ export const mockProperties = [
     withPets: false, withKids: true, address: 'Есильский р-н, Мангилик Ел 40', 
     complex: 'ЖК Светлый', description: 'Светлая евродвушка в новом доме. Современный минимализм, панорамные окна.', 
     date: '1 апр.', views: 342, isHot: true, 
-    img: '/images/room3.jpg', 
+    img: '/room3.jpg', 
     images: [
-      '/images/room3.jpg',
-      '/images/bedroom.jpg',
-      '/images/kitchen1.jpg',
-      '/images/toilet3.jpg'
+      '/room3.jpg',
+      '/bedroom.jpg',
+      '/kitchen1.jpg',
+      '/toilet3.jpg'
     ], coords: [51.0906, 71.4182] 
   },
   { 
@@ -21,13 +21,13 @@ export const mockProperties = [
     address: 'Бостандыкский р-н, Аль-Фараби 15', 
     complex: 'ЖК Premium', description: 'Премиальная 3-комнатная квартира с дизайнерским ремонтом. Встроенная техника.', 
     date: '31 мар.', views: 890, isHot: true, 
-    img: '/images/room2.jpg', 
+    img: '/room2.jpg', 
     images: [
-      '/images/room2.jpg',
-      '/images/room3.jpg',
-      '/images/bedroom1.jpg',
-      '/images/kitchen2.jpg',
-      '/images/toilet2.jpg'
+      '/room2.jpg',
+      '/room3.jpg',
+      '/bedroom1.jpg',
+      '/kitchen2.jpg',
+      '/toilet2.jpg'
     ], coords: [43.2189, 76.9297] 
   },
   { 
@@ -37,11 +37,11 @@ export const mockProperties = [
     withPets: true, withKids: true, address: 'Аль-Фарабийский р-н, Тауке хана 43', 
     complex: '', description: 'Уютная студия в центре. Есть всё необходимое для комфортного проживания.', 
     date: '1 апр.', views: 156, isHot: false, 
-    img: '/images/room2.jpg', 
+    img: '/room2.jpg', 
     images: [
-      '/images/room2.jpg',
-      '/images/kitchen3.jpg',
-      '/images/toilet3.jpg'
+      '/room2.jpg',
+      '/kitchen3.jpg',
+      '/toilet3.jpg'
     ], coords: [42.3155, 69.5869] 
   }
 ];

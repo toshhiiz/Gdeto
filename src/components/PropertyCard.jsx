@@ -1,57 +1,108 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
+import { formatPrice, generatePropertyTitle } from '../utils/formatters';
+import { useFavorites } from '../context/FavoritesContext';
+import { useNotification } from '../context/NotificationContext';
+import { Button } from './UI/Button';
+import { TOAST_MESSAGES } from '../constants/config';
 
-const PropertyCard = ({ property, isList, generateTitle, isFavorite, toggleFavorite }) => {
+const PropertyCard = memo(({ property, isList }) => {
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const { showSuccess, showInfo } = useNotification();
+  const imageUrl = property.img || property.images?.[0] || '/room.jpg';
+  const isFav = isFavorite(property.id);
+
+  const handleToggleFavorite = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleFavorite(property.id);
+    if (isFav) {
+      showInfo(TOAST_MESSAGES.SUCCESS_REMOVE_FAVORITE);
+    } else {
+      showSuccess(TOAST_MESSAGES.SUCCESS_ADD_FAVORITE);
+    }
+  };
+
   if (!isList) {
     return (
-      <div className="compact-card">
-        <Link to={`/property/${property.id}`} className="compact-image">
-          <img src={property.img} alt="фото" />
-          <div className="compact-deal-type">{property.dealType}</div>
-        </Link>
-        <div className="compact-info">
-          <div className="compact-price">
-            {property.price.toLocaleString('ru-RU')} ₸ {property.rentPeriod === 'Помесячно' && <span>/ мес</span>}
+      <Link to={`/property/${property.id}`} className="block">
+        <div className="compact-card hover:shadow-lg transition-shadow">
+          <div className="compact-image relative">
+            <img 
+              src={imageUrl} 
+              alt={generatePropertyTitle(property)}
+              loading="lazy"
+              onError={(e) => e.target.src = '/room.jpg'}
+            />
+            <div className="compact-deal-type">{property.dealType}</div>
+            <button
+              onClick={handleToggleFavorite}
+              className={`absolute top-4 right-4 text-xl ${isFav ? 'text-red-500' : 'text-gray-300'}`}
+              aria-label={isFav ? 'Удалить из избранного' : 'Добавить в избранное'}
+            >
+              ♥
+            </button>
           </div>
-          <div className="compact-title">{property.rooms}-комн., {property.area} м²</div>
-          <div className="compact-address">{property.city}, {property.address.split(',')[0]}</div>
+          <div className="compact-info">
+            <div className="compact-price">{formatPrice(property.price)}</div>
+            <div className="compact-title">{property.rooms}-комн., {property.area} м²</div>
+            <div className="compact-address">{property.city}, {property.address.split(',')[0]}</div>
+          </div>
         </div>
-      </div>
+      </Link>
     );
   }
 
   return (
-    <div className="list-card">
-      <div className="list-card-image">
-        <img src={property.img} alt={generateTitle(property)} />
-        <div className="photo-count">📷 {property.photoCount}</div>
-      </div>
-      <div className="list-card-content">
-        <div className="card-header-row">
-          <Link to={`/property/${property.id}`} className="card-main-title">{generateTitle(property)}</Link>
-          <div className="card-main-price">
-            {property.price.toLocaleString('ru-RU')} ₸ {property.rentPeriod === 'Помесячно' && <span>за месяц</span>}
-          </div>
-        </div>
-        <div className="card-address-row">{property.city}, {property.address} {property.complex && `• ${property.complex}`}</div>
-        <div className="card-description">{property.description}</div>
-        <div className="card-meta">
-          <span className="author-badge">{property.authorType}</span>
-          {property.withPets && <span className="feature-badge">🐶 Можно с животными</span>}
-          {property.withKids && <span className="feature-badge">👶 Можно с детьми</span>}
-        </div>
-        <div className="card-footer-row">
-          <div className="card-stats"><span>{property.city}</span><span>• {property.date}</span></div>
-          <button 
-            className={`action-btn ${isFavorite ? 'primary-btn' : 'outline-btn'}`}
-            onClick={() => toggleFavorite(property.id)}
+    <Link to={`/property/${property.id}`} className="block">
+      <div className="list-card hover:shadow-lg transition-shadow">
+        <div className="list-card-image relative">
+          <img 
+            src={imageUrl} 
+            alt={generatePropertyTitle(property)}
+            loading="lazy"
+            onError={(e) => e.target.src = '/room.jpg'}
+          />
+          <div className="photo-count">📷 {property.photoCount}</div>
+          <button
+            onClick={handleToggleFavorite}
+            className={`absolute top-4 right-4 text-2xl ${isFav ? 'text-red-500' : 'text-gray-300'}`}
+            aria-label={isFav ? 'Удалить из избранного' : 'Добавить в избранное'}
           >
-            {isFavorite ? 'В Избранном' : 'В Избранное'}
+            ♥
           </button>
         </div>
+        <div className="list-card-content">
+          <div className="card-header-row">
+            <h3 className="card-main-title">{generatePropertyTitle(property)}</h3>
+            <div className="card-main-price">{formatPrice(property.price)}</div>
+          </div>
+          <div className="card-address-row">{property.city}, {property.address} {property.complex && `• ${property.complex}`}</div>
+          <div className="card-description">{property.description}</div>
+          <div className="card-meta">
+            <span className="author-badge">{property.authorType}</span>
+            {property.withPets && <span className="feature-badge">🐶 Можно с животными</span>}
+            {property.withKids && <span className="feature-badge">👶 Можно с детьми</span>}
+          </div>
+          <div className="card-footer-row">
+            <div className="card-stats"><span>{property.city}</span><span>• {property.date}</span></div>
+            <Button
+              variant={isFav ? 'primary' : 'outline'}
+              size="sm"
+              onClick={(e) => {
+                e.preventDefault();
+                handleToggleFavorite(e);
+              }}
+            >
+              {isFav ? 'В Избранном' : 'В Избранное'}
+            </Button>
+          </div>
+        </div>
       </div>
-    </div>
+    </Link>
   );
-};
+});
+
+PropertyCard.displayName = 'PropertyCard';
 
 export default PropertyCard;
