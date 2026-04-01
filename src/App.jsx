@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import PropertyCard from './components/PropertyCard';
@@ -6,12 +6,15 @@ import Filter from './components/Filter';
 import Login from './pages/Login';
 import PropertyPage from './pages/PropertyPage';
 import AddProperty from './pages/AddProperty';
+import NotFound from './pages/NotFound';
 import { mockProperties, generateTitle } from './data';
 
 function App() {
   const [isSearched, setIsSearched] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [sortBy, setSortBy] = useState('new');
 
+  // Фильтры
   const [dealType, setDealType] = useState('Аренда'); 
   const [rentPeriod, setRentPeriod] = useState('Помесячно');
   const [propertyType, setPropertyType] = useState('Квартира');
@@ -32,9 +35,23 @@ function App() {
   const [fromOwner, setFromOwner] = useState(false);
   const [searchText, setSearchText] = useState('');
 
+  // Избранное (сохраняем в localStorage)
+  const [favorites, setFavorites] = useState(() => {
+    const saved = localStorage.getItem('gdeto_favs');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('gdeto_favs', JSON.stringify(favorites));
+  }, [favorites]);
+
+  const toggleFavorite = (id) => {
+    setFavorites(prev => prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id]);
+  };
+
   const kazakhstanCities = ['Все города', 'Астана', 'Алматы', 'Шымкент', 'Актобе', 'Караганда', 'Атырау'];
 
-  const filteredProperties = mockProperties.filter(p => {
+  let filteredProperties = mockProperties.filter(p => {
     if (p.dealType !== dealType) return false;
     if (dealType === 'Аренда' && p.rentPeriod !== rentPeriod) return false;
     if (selectedCity !== 'Все города' && p.city !== selectedCity) return false;
@@ -64,6 +81,10 @@ function App() {
     return true;
   });
 
+  // Сортировка
+  if (sortBy === 'cheap') filteredProperties.sort((a, b) => a.price - b.price);
+  if (sortBy === 'expensive') filteredProperties.sort((a, b) => b.price - a.price);
+
   const hotOffers = mockProperties.filter(p => p.isHot).slice(0, 4);
 
   const clearAllFilters = () => {
@@ -91,7 +112,6 @@ function App() {
                 <section className="hero">
                   <div className="hero-content">
                     <h1>Недвижимость в Казахстане</h1>
-                    <p className="hero-subtitle">Поиск, аренда и продажа недвижимости без посредников</p>
                     <Filter 
                       dealType={dealType} setDealType={setDealType} rentPeriod={rentPeriod} setRentPeriod={setRentPeriod}
                       propertyType={propertyType} setPropertyType={setPropertyType} selectedCity={selectedCity} setSelectedCity={setSelectedCity}
@@ -118,34 +138,39 @@ function App() {
                   </section>
                 ) : (
                   <section className="listings-section">
-                    <div className="section-header">
+                    <div className="section-header" style={{ alignItems: 'center' }}>
                       <h2>Найдено {filteredProperties.length} объявлений</h2>
-                      <button className="reset-btn" onClick={() => setIsSearched(false)}>Сбросить поиск</button>
+                      <div style={{ display: 'flex', gap: '15px' }}>
+                        <select className="filter-select" value={sortBy} onChange={e => setSortBy(e.target.value)}>
+                          <option value="new">Сначала новые</option>
+                          <option value="cheap">Сначала дешевые</option>
+                          <option value="expensive">Сначала дорогие</option>
+                        </select>
+                        <button className="reset-btn" onClick={() => setIsSearched(false)}>Сбросить поиск</button>
+                      </div>
                     </div>
                     <div className="list-container">
                       {filteredProperties.length > 0 ? (
-                        filteredProperties.map((p) => <PropertyCard key={p.id} property={p} isList={true} generateTitle={generateTitle} />)
+                        filteredProperties.map((p) => (
+                          <PropertyCard 
+                            key={p.id} property={p} isList={true} generateTitle={generateTitle} 
+                            isFavorite={favorites.includes(p.id)} toggleFavorite={toggleFavorite} 
+                          />
+                        ))
                       ) : (
-                        <div className="no-results"><h3>Ничего не найдено</h3><p>Попробуйте сбросить фильтры.</p></div>
+                        <div className="no-results"><h3>Ничего не найдено</h3></div>
                       )}
                     </div>
                   </section>
                 )}
               </>
             } />
-            
             <Route path="/login" element={<Login />} />
-            <Route path="/property/:id" element={<PropertyPage />} />
+            <Route path="/property/:id" element={<PropertyPage favorites={favorites} toggleFavorite={toggleFavorite} />} />
             <Route path="/add" element={<AddProperty />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
-        
-        <footer className="footer">
-          <div className="footer-content">
-            <div className="footer-logo">Гдето<span>.</span></div>
-            <p>&copy; 2026 Проект «Гдето».</p>
-          </div>
-        </footer>
       </div>
     </Router>
   );
