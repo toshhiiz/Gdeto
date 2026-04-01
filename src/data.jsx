@@ -1,8 +1,49 @@
 export const mockProperties = [
-  { id: 1, dealType: 'Аренда', rentPeriod: 'Помесячно', city: 'Астана', type: 'Квартира', rooms: 2, area: 45, floor: 12, totalFloors: 12, price: 200000, owner: false, authorType: 'Компания', photo: true, photoCount: 3, furnished: 'Да', withPets: false, withKids: true, address: 'Сарыарка р-н, Чингиз Айтматов 79', complex: 'ЖК Alakol', description: 'Сдам евро двушку. Квартира свободна, заселение сразу.', date: '31 мар.', views: 539, isHot: true, img: 'https://images.unsplash.com/photo-1502672260266-1c1de2d9200b?auto=format&fit=crop&w=800&q=80', images: ['https://images.unsplash.com/photo-1502672260266-1c1de2d9200b?auto=format&fit=crop&w=800&q=80', 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80', 'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=800&q=80'] },
-  { id: 2, dealType: 'Аренда', rentPeriod: 'Помесячно', city: 'Алматы', type: 'Квартира', rooms: 1, area: 35, floor: 4, totalFloors: 9, price: 180000, owner: true, authorType: 'Хозяин', photo: true, photoCount: 2, furnished: 'Да', withPets: true, withKids: true, address: 'Бостандыкский р-н, Абая 150', complex: 'ЖК Гагарин Парк', description: 'Светлая квартира после ремонта.', date: '31 мар.', views: 245, isHot: true, img: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80', images: ['https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80', 'https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=800&q=80'] },
-  { id: 3, dealType: 'Продажа', city: 'Астана', type: 'Квартира', rooms: 3, area: 85, floor: 7, totalFloors: 16, price: 35000000, owner: false, authorType: 'Специалист', photo: true, photoCount: 2, furnished: 'Нет', address: 'Есильский р-н, Мангилик Ел 50', complex: 'ЖК Nova City', description: 'Просторная 3-комнатная квартира в бизнес-классе.', date: '30 мар.', views: 1024, isHot: false, img: 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=800&q=80', images: ['https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=800&q=80', 'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&w=800&q=80'] },
-  { id: 4, dealType: 'Аренда', rentPeriod: 'Посуточно', city: 'Астана', type: 'Квартира', rooms: 2, area: 50, floor: 5, totalFloors: 10, price: 15000, owner: true, authorType: 'Хозяин', photo: true, photoCount: 2, furnished: 'Да', withPets: false, withKids: true, address: 'Алматы р-н, Кудайбердыулы 17', complex: '', description: 'Посуточная аренда. Wi-Fi, Smart TV.', date: '31 мар.', views: 112, isHot: true, img: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=800&q=80', images: ['https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=800&q=80', 'https://images.unsplash.com/photo-1501183638710-841dd1904471?auto=format&fit=crop&w=800&q=80'] }
+  { 
+    id: 1, dealType: 'Аренда', rentPeriod: 'Помесячно', city: 'Астана', type: 'Квартира', 
+    rooms: 2, area: 60, floor: 14, totalFloors: 22, price: 250000, owner: false, 
+    authorType: 'Агентство', photo: true, photoCount: 4, furnished: 'Да', 
+    withPets: false, withKids: true, address: 'Есильский р-н, Мангилик Ел 40', 
+    complex: 'ЖК Светлый', description: 'Светлая евродвушка в новом доме. Современный минимализм, панорамные окна.', 
+    date: '1 апр.', views: 342, isHot: true, 
+    img: '/images/room3.jpg', 
+    images: [
+      '/images/room3.jpg',
+      '/images/bedroom.jpg',
+      '/images/kitchen1.jpg',
+      '/images/toilet3.jpg'
+    ], coords: [51.0906, 71.4182] 
+  },
+  { 
+    id: 2, dealType: 'Продажа', city: 'Алматы', type: 'Квартира', 
+    rooms: 3, area: 110, floor: 5, totalFloors: 9, price: 65000000, owner: true, 
+    authorType: 'Хозяин', photo: true, photoCount: 5, furnished: 'Да', 
+    address: 'Бостандыкский р-н, Аль-Фараби 15', 
+    complex: 'ЖК Premium', description: 'Премиальная 3-комнатная квартира с дизайнерским ремонтом. Встроенная техника.', 
+    date: '31 мар.', views: 890, isHot: true, 
+    img: '/images/room2.jpg', 
+    images: [
+      '/images/room2.jpg',
+      '/images/room3.jpg',
+      '/images/bedroom1.jpg',
+      '/images/kitchen2.jpg',
+      '/images/toilet2.jpg'
+    ], coords: [43.2189, 76.9297] 
+  },
+  { 
+    id: 3, dealType: 'Аренда', rentPeriod: 'Посуточно', city: 'Шымкент', type: 'Квартира', 
+    rooms: 1, area: 35, floor: 3, totalFloors: 5, price: 12000, owner: true, 
+    authorType: 'Хозяин', photo: true, photoCount: 3, furnished: 'Да', 
+    withPets: true, withKids: true, address: 'Аль-Фарабийский р-н, Тауке хана 43', 
+    complex: '', description: 'Уютная студия в центре. Есть всё необходимое для комфортного проживания.', 
+    date: '1 апр.', views: 156, isHot: false, 
+    img: '/images/room2.jpg', 
+    images: [
+      '/images/room2.jpg',
+      '/images/kitchen3.jpg',
+      '/images/toilet3.jpg'
+    ], coords: [42.3155, 69.5869] 
+  }
 ];
 
 export const generateTitle = (p) => {
