@@ -1,57 +1,65 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { mockProperties, generateTitle } from '../data';
 
-const PropertyCard = ({ property, isList, generateTitle, isFavorite, toggleFavorite }) => {
-  if (!isList) {
-    return (
-      <div className="compact-card">
-        <Link to={`/property/${property.id}`} className="compact-image">
-          <img src={property.img} alt="фото" />
-          <div className="compact-deal-type">{property.dealType}</div>
-        </Link>
-        <div className="compact-info">
-          <div className="compact-price">
-            {property.price.toLocaleString('ru-RU')} ₸ {property.rentPeriod === 'Помесячно' && <span>/ мес</span>}
-          </div>
-          <div className="compact-title">{property.rooms}-комн., {property.area} м²</div>
-          <div className="compact-address">{property.city}, {property.address.split(',')[0]}</div>
-        </div>
-      </div>
-    );
-  }
+const PropertyPage = ({ favorites, toggleFavorite }) => {
+  const { id } = useParams();
+  const property = mockProperties.find(p => p.id === parseInt(id));
+  const [currentImg, setCurrentImg] = useState(0);
+
+  if (!property) return <div className="no-results"><h2>Объявление не найдено 😔</h2><Link to="/">Вернуться на главную</Link></div>;
+
+  const isFav = favorites.includes(property.id);
 
   return (
-    <div className="list-card">
-      <div className="list-card-image">
-        <img src={property.img} alt={generateTitle(property)} />
-        <div className="photo-count">📷 {property.photoCount}</div>
-      </div>
-      <div className="list-card-content">
-        <div className="card-header-row">
-          <Link to={`/property/${property.id}`} className="card-main-title">{generateTitle(property)}</Link>
-          <div className="card-main-price">
-            {property.price.toLocaleString('ru-RU')} ₸ {property.rentPeriod === 'Помесячно' && <span>за месяц</span>}
+    <div className="property-page">
+      <div className="breadcrumbs"><Link to="/">← Вернуться к поиску</Link></div>
+
+      <div className="property-layout">
+        <div className="property-main">
+          <div className="property-gallery">
+            <img src={property.images[currentImg]} alt="фото" className="main-photo" />
+            <div className="gallery-thumbnails">
+              {property.images.map((img, idx) => (
+                <img key={idx} src={img} alt="thumb" className={currentImg === idx ? 'active-thumb' : ''} onClick={() => setCurrentImg(idx)} />
+              ))}
+            </div>
+          </div>
+          
+          <div className="property-info-block">
+            <h1 className="property-title">{generateTitle(property)}</h1>
+            <p className="property-address">📍 {property.city}, {property.address} {property.complex && `• ${property.complex}`}</p>
+            <h3 className="section-title">Описание</h3>
+            <p className="property-desc">{property.description}</p>
+            <h3 className="section-title">Характеристики</h3>
+            <ul className="property-features">
+              <li><strong>Тип жилья:</strong> {property.type}</li>
+              <li><strong>Площадь:</strong> {property.area} м²</li>
+              <li><strong>Этаж:</strong> {property.floor} из {property.totalFloors}</li>
+              <li><strong>Меблирована:</strong> {property.furnished}</li>
+            </ul>
           </div>
         </div>
-        <div className="card-address-row">{property.city}, {property.address} {property.complex && `• ${property.complex}`}</div>
-        <div className="card-description">{property.description}</div>
-        <div className="card-meta">
-          <span className="author-badge">{property.authorType}</span>
-          {property.withPets && <span className="feature-badge">🐶 Можно с животными</span>}
-          {property.withKids && <span className="feature-badge">👶 Можно с детьми</span>}
-        </div>
-        <div className="card-footer-row">
-          <div className="card-stats"><span>{property.city}</span><span>• {property.date}</span></div>
-          <button 
-            className={`action-btn ${isFavorite ? 'primary-btn' : 'outline-btn'}`}
-            onClick={() => toggleFavorite(property.id)}
-          >
-            {isFavorite ? 'В Избранном' : 'В Избранное'}
-          </button>
+
+        <div className="property-sidebar">
+          <div className="sidebar-card">
+            <div className="sidebar-price">{property.price.toLocaleString('ru-RU')} ₸</div>
+            <div className="sidebar-author">
+              <div className="author-avatar">{property.authorType.charAt(0)}</div>
+              <div><p className="author-name">{property.authorType}</p><p className="author-status">На сайте с 2024 года</p></div>
+            </div>
+            <button className="primary-btn w-full">Показать телефон</button>
+            <button 
+              className={`w-full mt-10 ${isFav ? 'primary-btn' : 'outline-btn'}`} 
+              onClick={() => toggleFavorite(property.id)}
+            >
+              {isFav ? 'Удалить из избранного' : 'Добавить в избранное'}
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default PropertyCard;
+export default PropertyPage;
