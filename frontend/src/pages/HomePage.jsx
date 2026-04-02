@@ -62,7 +62,7 @@ const HomePage = () => {
       if (p.dealType !== dealType) return false;
       if (dealType === 'Аренда' && p.rentPeriod !== rentPeriod) return false;
       if (selectedCity !== 'Все города' && p.city !== selectedCity) return false;
-      if (propertyType !== 'Квартира' && p.type !== propertyType) return false;
+      if (propertyType !== 'Квартира' && p.propertyType !== propertyType && p.type !== propertyType) return false;
       if (rooms !== 'Любая' && p.rooms !== (rooms === '5+' ? 5 : parseInt(rooms))) return false;
       if (priceFrom && p.price < parseInt(priceFrom)) return false;
       if (priceTo && p.price > parseInt(priceTo)) return false;
@@ -70,9 +70,10 @@ const HomePage = () => {
       if (withKids && !p.withKids) return false;
       if (areaFrom && p.area < parseInt(areaFrom)) return false;
       if (areaTo && p.area > parseInt(areaTo)) return false;
-      if (hasPhoto && !p.photo) return false;
-      if (fromOwner && !p.owner) return false;
-      if (searchText && !`${p.address} ${p.complex} ${p.description}`.toLowerCase().includes(searchText.toLowerCase())) return false;
+      if (searchText) {
+        const searchStr = `${p.address || ''} ${p.complex || ''} ${p.description || ''}`.toLowerCase();
+        if (!searchStr.includes(searchText.toLowerCase())) return false;
+      }
       return true;
     });
 
