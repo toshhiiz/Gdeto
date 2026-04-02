@@ -15,7 +15,7 @@ app.use(express.json());
 // Статические файлы для загруженных изображений
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
 
