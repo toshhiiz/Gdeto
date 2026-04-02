@@ -44,10 +44,3 @@ Thumbs.db
 # Тестирование
 coverage
 .nyc_output
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
->>>>>>> 1696246 (somethin)
