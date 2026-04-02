@@ -161,12 +161,12 @@ const HomePage = () => {
 
       {!isSearched ? (
         <section className="home-section">
-          <div className="section-header"><h2>Горячие предложения</h2></div>
+          <div className="section-header"><h2>Последние объявления</h2></div>
           <div className="compact-grid">
             {isLoading ? (
               <ListCardSkeleton />
             ) : (
-              Array.isArray(properties) ? properties.filter(p => p.isHot).map(p => (
+              Array.isArray(properties) ? properties.slice(0, 6).map(p => (
                 <PropertyCard key={p.id} property={p} isList={false} />
               )) : <p>Загрузка...</p>
             )}
