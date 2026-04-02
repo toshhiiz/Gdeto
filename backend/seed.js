@@ -2,8 +2,8 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const Property = require('./models/Property');
 
-// Use MONGO_URI from environment
-const mongoUri = process.env.MONGO_URI || process.env.MONGO_URL;
+// Use MONGO_URL from environment
+const mongoUri = process.env.MONGO_URL || process.env.MONGO_URI;
 
 if (!mongoUri) {
   console.error('❌ Error: MONGO_URI or MONGO_URL not found in environment');
