@@ -1,5 +1,15 @@
 // API Configuration
-export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const rawApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// Ensure API_URL has proper protocol and /api path
+const formatApiUrl = (url) => {
+  if (!url) return 'http://localhost:5000/api';
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return url.endsWith('/api') ? url : `${url}/api`;
+  }
+  // If no protocol, assume https
+  return url.endsWith('/api') ? `https://${url}` : `https://${url}/api`;
+};
+export const API_URL = formatApiUrl(rawApiUrl);
 
 // Cities
 export const KAZAKHSTAN_CITIES = ['Все города', 'Астана', 'Алматы', 'Шымкент', 'Актобе', 'Караганда', 'Атырау'];
