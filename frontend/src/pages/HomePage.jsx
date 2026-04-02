@@ -77,8 +77,19 @@ const HomePage = () => {
       return true;
     });
 
-    if (sortBy === 'cheap') filtered.sort((a, b) => a.price - b.price);
-    if (sortBy === 'expensive') filtered.sort((a, b) => b.price - a.price);
+    // Sort by selected criteria
+    if (sortBy === 'cheap') {
+      filtered.sort((a, b) => a.price - b.price);
+    } else if (sortBy === 'expensive') {
+      filtered.sort((a, b) => b.price - a.price);
+    } else {
+      // Default: sort by newest first
+      filtered.sort((a, b) => {
+        const dateA = new Date(a.createdAt || 0);
+        const dateB = new Date(b.createdAt || 0);
+        return dateB - dateA; // Newest first
+      });
+    }
 
     return filtered;
   }, [properties, dealType, rentPeriod, propertyType, selectedCity, rooms, priceFrom, priceTo, searchText, withPets, withKids, sortBy, areaFrom, areaTo, hasPhoto, fromOwner]);

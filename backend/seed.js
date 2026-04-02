@@ -24,8 +24,7 @@ const testProperties = [
     address: 'Есильский р-н, Мангилик Ел 40',
     complex: 'ЖК Светлый',
     description: 'Светлая евродвушка в новом доме. Современный минимализм, панорамные окна.',
-    images: ['/room3.jpg', '/bedroom.jpg', '/kitchen1.jpg', '/toilet3.jpg'],
-    isHot: true
+    images: ['/room3.jpg', '/bedroom.jpg', '/kitchen1.jpg', '/toilet3.jpg']
   },
   {
     dealType: 'Продажа',
@@ -39,8 +38,7 @@ const testProperties = [
     address: 'Бостандыкский р-н, Аль-Фараби 15',
     complex: 'ЖК Premium',
     description: 'Премиальная 3-комнатная квартира с дизайнерским ремонтом. Встроенная техника.',
-    images: ['/room2.jpg', '/room3.jpg', '/bedroom1.jpg', '/kitchen2.jpg', '/toilet2.jpg'],
-    isHot: true
+    images: ['/room2.jpg', '/room3.jpg', '/bedroom1.jpg', '/kitchen2.jpg', '/toilet2.jpg']
   },
   {
     dealType: 'Аренда',
@@ -54,8 +52,7 @@ const testProperties = [
     price: 12000,
     address: 'Аль-Фарабийский р-н, Тауке хана 43',
     description: 'Уютная студия в центре. Есть всё необходимое для комфортного проживания.',
-    images: ['/room2.jpg', '/kitchen3.jpg', '/toilet3.jpg'],
-    isHot: false
+    images: ['/room2.jpg', '/kitchen3.jpg', '/toilet3.jpg']
   }
 ];
 

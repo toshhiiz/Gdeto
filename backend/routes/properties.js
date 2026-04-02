@@ -34,7 +34,7 @@ router.get('/:id', async (req, res) => {
 // Создать объявление (требует аутентификации)
 router.post('/', authMiddleware, async (req, res) => {
   try {
-    const { dealType, rentPeriod, propertyType, city, rooms, price, area, address, description, images, isHot } = req.body;
+    const { dealType, rentPeriod, propertyType, city, rooms, price, area, address, description, images } = req.body;
     
     const property = new Property({
       dealType,
@@ -47,7 +47,6 @@ router.post('/', authMiddleware, async (req, res) => {
       address,
       description,
       images,
-      isHot,
       owner: req.userId,
     });
 

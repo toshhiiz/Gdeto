@@ -11,7 +11,6 @@ const PropertySchema = new mongoose.Schema({
   address: { type: String, required: true },
   description: String,
   images: [String],
-  isHot: { type: Boolean, default: false },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   createdAt: { type: Date, default: Date.now }
 });

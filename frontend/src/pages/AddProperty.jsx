@@ -48,8 +48,7 @@ const AddProperty = () => {
       furnished: 'Да',
       rentPeriod: 'Помесячно',
       floor: 1,
-      totalFloors: 5,
-      isHot: false
+      totalFloors: 5
     }
   });
 
@@ -355,23 +354,6 @@ const AddProperty = () => {
                 min="1"
                 {...register('totalFloors', { valueAsNumber: true })}
               />
-            </div>
-            
-            {/* Hot property checkbox */}
-            <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid var(--border-color)' }}>
-              <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: '12px' }}>
-                <input
-                  type="checkbox"
-                  {...register('isHot')}
-                  style={{ width: '18px', height: '18px', cursor: 'pointer' }}
-                />
-                <span style={{ fontSize: '14px', fontWeight: '500', color: 'var(--text-main)' }}>
-                  🔥 Отметить как горячее предложение
-                </span>
-              </label>
-              <p style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: '8px', marginLeft: '30px' }}>
-                Горячие предложения выделяются в поиске и быстрее находят покупателя
-              </p>
             </div>
           </div>
 
