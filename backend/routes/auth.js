@@ -49,4 +49,14 @@ router.get('/me', authMiddleware, async (req, res) => {
   }
 });
 
+// Выход (логаут)
+router.post('/logout', authMiddleware, async (req, res) => {
+  try {
+    // Логаут реализуется на фронте через удаление токена
+    res.json({ msg: 'Успешный выход' });
+  } catch (err) {
+    res.status(500).send('Ошибка сервера');
+  }
+});
+
 module.exports = router;

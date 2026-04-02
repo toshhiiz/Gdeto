@@ -96,7 +96,7 @@ export const authApi = {
   login: (email, password) => apiClient.post(API_ENDPOINTS.AUTH_LOGIN, { email, password }),
   register: (name, email, password) => apiClient.post(API_ENDPOINTS.AUTH_REGISTER, { name, email, password }),
   logout: () => apiClient.post(API_ENDPOINTS.AUTH_LOGOUT, {}),
-  getCurrentUser: () => apiClient.get('/auth/me'),
+  getCurrentUser: () => apiClient.get(API_ENDPOINTS.AUTH_ME),
 };
 
 // Favorites API

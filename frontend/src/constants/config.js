@@ -56,6 +56,7 @@ export const API_ENDPOINTS = {
   FAVORITES: '/favorites',
   AUTH_LOGIN: '/auth/login',
   AUTH_REGISTER: '/auth/register',
+  AUTH_ME: '/auth/me',
   AUTH_LOGOUT: '/auth/logout',
   UPLOAD: '/upload'
 };
