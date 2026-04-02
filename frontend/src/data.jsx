@@ -47,6 +47,7 @@ export const mockProperties = [
 ];
 
 export const generateTitle = (p) => {
-  if (p.type === 'Квартира') return `${p.rooms}-комнатная квартира, ${p.area} м², ${p.floor}/${p.totalFloors} этаж`;
-  return `${p.rooms}-комнатный ${p.type.toLowerCase()}, ${p.area} м²`;
+  const type = p.type || p.propertyType || 'Объект недвижимости';
+  if (type === 'Квартира') return `${p.rooms}-комнатная квартира, ${p.area} м², ${p.floor || 1}/${p.totalFloors || 1} этаж`;
+  return `${p.rooms}-комнатный ${type.toLowerCase()}, ${p.area} м²`;
 };
