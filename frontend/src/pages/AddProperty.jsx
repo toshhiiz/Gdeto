@@ -113,18 +113,18 @@ const AddProperty = () => {
 
   return (
     <div className="add-property-page">
-      <div className="add-container max-w-2xl mx-auto px-4 py-8">
+      <div className="add-container">
         <h2 className="text-3xl font-bold text-gray-800 mb-2">Новое объявление</h2>
         <p className="text-gray-600 mb-8">Заполните данные о вашей недвижимости</p>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="add-form space-y-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="add-form">
           
           {/* Deal Type Section */}
-          <div className="form-section border-b pb-6">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Тип сделки</h3>
+          <div className="form-section">
+            <h3>Тип сделки</h3>
             <div className="space-y-3">
               {Object.entries(DEAL_TYPES).map(([key, value]) => (
-                <label key={key} className="flex items-center cursor-pointer">
+                <label key={key}>
                   <input 
                     type="radio" 
                     name="dealType" 
@@ -132,17 +132,16 @@ const AddProperty = () => {
                     defaultChecked={dealType === value}
                     onChange={() => setDealType(value)}
                     {...register('dealType')}
-                    className="w-4 h-4 text-blue-600"
                   />
-                  <span className="ml-3 text-gray-700">{value}</span>
+                  <span>{value}</span>
                 </label>
               ))}
             </div>
           </div>
 
           {/* Basic Information */}
-          <div className="form-section border-b pb-6">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Основная информация</h3>
+          <div className="form-section">
+            <h3>Основная информация</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Select
                 label="Тип недвижимости"
@@ -177,8 +176,8 @@ const AddProperty = () => {
 
           {/* Rental Period - only for rent deals */}
           {dealType === 'Аренда' && (
-            <div className="form-section border-b pb-6">
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">Период аренды</h3>
+            <div className="form-section">
+              <h3>Период аренды</h3>
               <Select
                 label="Тип аренды"
                 options={rentPeriodOptions}
@@ -188,8 +187,8 @@ const AddProperty = () => {
           )}
 
           {/* Location and Description */}
-          <div className="form-section border-b pb-6">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Расположение и описание</h3>
+          <div className="form-section">
+            <h3>Расположение и описание</h3>
             <Select
               label="Город"
               options={cityOptions}
@@ -203,27 +202,32 @@ const AddProperty = () => {
               {...register('address')}
               required
             />
-            <div>
-              <label className="block text-sm font-semibold text-gray-800 mb-2">
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', fontSize: '13px', color: 'var(--text-main)' }}>
                 Описание объекта
               </label>
               <textarea
                 {...register('description')}
                 rows="6"
                 placeholder="Расскажите о преимуществах вашей недвижимости..."
-                className={`w-full px-4 py-2 border rounded-lg outline-none transition-colors ${
-                  errors.description ? 'border-red-500' : 'border-gray-300 focus:border-blue-600'
-                }`}
+                style={{ 
+                  width: '100%',
+                  padding: '12px 16px',
+                  fontSize: '14px',
+                  border: errors.description ? '1px solid #DC2626' : '1px solid var(--border-color)',
+                  borderRadius: 'var(--radius)',
+                  fontFamily: 'inherit'
+                }}
               />
               {errors.description && (
-                <p className="text-red-600 text-sm mt-1">{errors.description.message}</p>
+                <p style={{ color: '#DC2626', fontSize: '13px', marginTop: '8px' }}>{errors.description.message}</p>
               )}
             </div>
           </div>
 
           {/* Additional Info */}
-          <div className="form-section border-b pb-6">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Дополнительно</h3>
+          <div className="form-section">
+            <h3>Дополнительно</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Select
                 label="Меблировка"
@@ -246,40 +250,36 @@ const AddProperty = () => {
           </div>
 
           {/* Image Upload */}
-          <div className="form-section border-b pb-6">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Фотографии</h3>
-            <label className="block border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-500 transition">
-              <div className="text-4xl mb-2">📸</div>
-              <p className="text-gray-700 font-semibold">Загрузите фотографии</p>
-              <p className="text-gray-500 text-sm">или перетащите их сюда</p>
+          <div className="form-section">
+            <h3>Фотографии</h3>
+            <label className="image-upload-section">
+              <div style={{ fontSize: '32px', marginBottom: '8px' }}>📸</div>
+              <p className="image-upload-text">Загрузите фотографии</p>
+              <p className="image-upload-hint">или перетащите их сюда</p>
               <input
+                id="image-upload"
                 type="file"
                 multiple
                 accept="image/*"
                 onChange={handleImageUpload}
-                className="hidden"
               />
             </label>
 
             {images.length > 0 && (
-              <div className="mt-6">
-                <p className="text-sm font-semibold text-gray-700 mb-3">
+              <div style={{ marginTop: '24px' }}>
+                <p style={{ fontSize: '14px', fontWeight: '600', color: 'var(--text-main)', marginBottom: '12px' }}>
                   Загруженные фото ({images.length})
                 </p>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="image-gallery">
                   {images.map(image => (
-                    <div key={image.id} className="relative group">
-                      <img
-                        src={image.preview}
-                        alt="preview"
-                        className="w-full h-24 object-cover rounded"
-                      />
+                    <div key={image.id} className="image-item">
+                      <img src={image.preview} alt="preview" />
                       <button
                         type="button"
                         onClick={() => removeImage(image.id)}
-                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
+                        className="image-remove-btn"
                       >
-                        ×
+                        ✕
                       </button>
                     </div>
                   ))}
@@ -289,9 +289,9 @@ const AddProperty = () => {
           </div>
 
           {/* Form Actions */}
-          <div className="form-actions flex gap-4">
+          <div className="form-buttons">
             <Link to="/" className="flex-1">
-              <Button variant="secondary" size="lg" className="w-full">
+              <Button variant="secondary" size="lg" style={{ width: '100%' }}>
                 Отмена
               </Button>
             </Link>
