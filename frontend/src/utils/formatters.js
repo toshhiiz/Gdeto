@@ -46,10 +46,17 @@ export const formatArea = (area) => {
  * Generate property title
  */
 export const generatePropertyTitle = (property) => {
-  if (property.type === 'Квартира') {
-    return `${property.rooms}-комнатная квартира, ${formatArea(property.area)}, ${property.floor}/${property.totalFloors} этаж`;
+  if (!property) return 'Объект недвижимости';
+  const type = property.type || property.propertyType || 'Объект';
+  const rooms = property.rooms || 0;
+  const area = property.area || 0;
+  const floor = property.floor || 0;
+  const totalFloors = property.totalFloors || 0;
+  
+  if (type === 'Квартира') {
+    return `${rooms}-комнатная квартира, ${formatArea(area)}, ${floor}/${totalFloors} этаж`;
   }
-  return `${property.rooms}-комнатный ${property.type.toLowerCase()}, ${formatArea(property.area)}`;
+  return `${rooms}-комнатный ${(type || 'объект').toLowerCase()}, ${formatArea(area)}`;
 };
 
 /**
