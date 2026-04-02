@@ -70,7 +70,7 @@ const PropertyPage = () => {
   }
 const BACKEND_URL = 'https://gdeto.up.railway.app';
 const rawImages = property.images?.length ? property.images : (property.img ? [property.img] : ['/room.jpg']);
-const images = rawImages.map(img => img.startsWith('uploads') ? `${BACKEND_URL}/${img}` : img);
+const images = rawImages.map(img => img.startsWith('/uploads') ? `${BACKEND_URL}${img}` : img);
 const currentImage = images[currentImg] || images[0] || '/room.jpg';
   const isFav = isFavorite(property.id);
 
