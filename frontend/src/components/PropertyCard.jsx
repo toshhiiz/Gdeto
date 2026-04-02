@@ -56,9 +56,15 @@ const PropertyCard = memo(({ property, isList }) => {
             </button>
           </div>
           <div className="compact-info">
-            <div className="compact-price">{formatPrice(property.price)}</div>
+            <div className="compact-price">
+              {formatPrice(property.price)}
+              {property.rentPeriod && <span style={{ fontSize: '12px', color: '#6B7280' }}> / {property.rentPeriod}</span>}
+            </div>
             <div className="compact-title">{property.rooms}-комн., {property.area} м²</div>
-            <div className="compact-address">{property.city}, {property.address.split(',')[0]}</div>
+            <div className="compact-address">
+              📍 {property.city}, {property.address}
+              {property.complex && <span> • {property.complex}</span>}
+            </div>
           </div>
         </div>
       </Link>

@@ -554,6 +554,9 @@ input:focus, select:focus, textarea:focus {
   color: var(--text-muted);
   margin-bottom: 12px;
   font-weight: 500;
+  line-height: 1.4;
+  white-space: normal;
+  word-break: break-word;
 }
 
 .card-description {
