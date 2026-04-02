@@ -27,9 +27,9 @@ const PropertyCard = memo(({ property, isList }) => {
 
   if (!isList) {
     return (
-      <Link to={`/property/${property.id}`} className="block">
-        <div className="compact-card hover:shadow-lg transition-shadow">
-          <div className="compact-image relative">
+      <Link to={`/property/${property.id}`} className="property-card-link">
+        <div className="compact-card">
+          <div className="compact-image">
             <img 
               src={imageUrl} 
               alt={generatePropertyTitle(property)}
@@ -39,7 +39,17 @@ const PropertyCard = memo(({ property, isList }) => {
             <div className="compact-deal-type">{property.dealType}</div>
             <button
               onClick={handleToggleFavorite}
-              className={`absolute top-4 right-4 text-xl ${isFav ? 'text-red-500' : 'text-gray-300'}`}
+              className="favorite-btn"
+              style={{
+                position: 'absolute',
+                top: '16px',
+                right: '16px',
+                fontSize: '20px',
+                color: isFav ? '#EF4444' : '#D1D5DB',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer'
+              }}
               aria-label={isFav ? 'Удалить из избранного' : 'Добавить в избранное'}
             >
               ♥
@@ -56,9 +66,9 @@ const PropertyCard = memo(({ property, isList }) => {
   }
 
   return (
-    <Link to={`/property/${property.id}`} className="block">
-      <div className="list-card hover:shadow-lg transition-shadow">
-        <div className="list-card-image relative">
+    <Link to={`/property/${property.id}`} className="property-card-link">
+      <div className="list-card">
+        <div className="list-card-image">
           <img 
             src={imageUrl} 
             alt={generatePropertyTitle(property)}
@@ -68,7 +78,17 @@ const PropertyCard = memo(({ property, isList }) => {
           <div className="photo-count">📷 {property.photoCount}</div>
           <button
             onClick={handleToggleFavorite}
-            className={`absolute top-4 right-4 text-2xl ${isFav ? 'text-red-500' : 'text-gray-300'}`}
+            className="favorite-btn"
+            style={{
+              position: 'absolute',
+              top: '16px',
+              right: '16px',
+              fontSize: '24px',
+              color: isFav ? '#EF4444' : '#D1D5DB',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer'
+            }}
             aria-label={isFav ? 'Удалить из избранного' : 'Добавить в избранное'}
           >
             ♥
