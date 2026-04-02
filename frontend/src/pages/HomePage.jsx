@@ -54,6 +54,7 @@ const HomePage = () => {
   }, []);
 
   const filteredProperties = useMemo(() => {
+    if (!Array.isArray(properties)) return [];
     let filtered = properties.filter(p => {
       if (p.dealType !== dealType) return false;
       if (dealType === 'Аренда' && p.rentPeriod !== rentPeriod) return false;
@@ -150,9 +151,9 @@ const HomePage = () => {
             {isLoading ? (
               <ListCardSkeleton />
             ) : (
-              properties.filter(p => p.isHot).map(p => (
+              Array.isArray(properties) ? properties.filter(p => p.isHot).map(p => (
                 <PropertyCard key={p.id} property={p} isList={false} />
-              ))
+              )) : <p>Загрузка...</p>
             )}
           </div>
         </section>
