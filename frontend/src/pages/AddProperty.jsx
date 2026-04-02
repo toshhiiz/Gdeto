@@ -41,14 +41,56 @@ const AddProperty = () => {
   });
 
   const { execute: submitProperty, status } = useAsync(async (data) => {
-    // Симмуляция отправки на сервер
-    // В реальном приложении это был бы запрос к API
-    console.log('Submitting property:', data, 'Images:', images);
+    // Загружаем изображения и получаем их пути
+    const imagePaths = [];
     
-    // Имитация задержки сервера
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    return { success: true };
+    for (const image of images) {
+      if (image.file) {
+        try {
+          const formData = new FormData();
+          formData.append('file', image.file);
+          const uploadResponse = await fetch('https://gdeto.up.railway.app/api/upload', {
+            method: 'POST',
+            body: formData
+          });
+          
+          if (uploadResponse.ok) {
+            const uploadedData = await uploadResponse.json();
+            if (uploadedData.path) {
+              imagePaths.push(uploadedData.path);
+            }
+          }
+        } catch (error) {
+          console.error('Error uploading image:', error);
+        }
+      }
+    }
+
+    // Отправляем объявление с путями изображений
+    const propertyData = {
+      ...data,
+      images: imagePaths,
+      rooms: parseInt(data.rooms),
+      area: parseInt(data.area),
+      price: parseInt(data.price),
+      floor: parseInt(data.floor),
+      totalFloors: parseInt(data.totalFloors)
+    };
+
+    const response = await fetch('https://gdeto.up.railway.app/api/properties', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('gdeto_token')}`
+      },
+      body: JSON.stringify(propertyData)
+    });
+
+    if (!response.ok) {
+      throw new Error('Ошибка при создании объявления');
+    }
+
+    return await response.json();
   });
 
   const onSubmit = async (data) => {

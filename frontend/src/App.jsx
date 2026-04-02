@@ -11,6 +11,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 
 import HomePage from './pages/HomePage';
 import Login from './pages/Login';
+import Profile from './pages/Profile';
 import PropertyPage from './pages/PropertyPage';
 import AddProperty from './pages/AddProperty';
 import NotFound from './pages/NotFound';
@@ -22,7 +23,7 @@ function AppContent() {
         <Link to="/" className="logo">Гдето<span>.</span></Link>
         <nav className="nav">
           <Link to="/add" className="add-btn">+ Подать объявление</Link>
-          <Link to="/login" className="login-btn">Личный кабинет</Link>
+          <Link to="/profile" className="login-btn">Личный кабинет</Link>
         </nav>
       </header>
 
@@ -30,6 +31,7 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/property/:id" element={<PropertyPage />} />
           <Route path="/add" element={<AddProperty />} />
           <Route path="*" element={<NotFound />} />
