@@ -64,7 +64,7 @@ const AddProperty = () => {
       if (image.file) {
         try {
           const formData = new FormData();
-          formData.append('file', image.file);
+          formData.append('image', image.file);
           const uploadResponse = await fetch(`${API_URL}/upload`, {
             method: 'POST',
             headers: {

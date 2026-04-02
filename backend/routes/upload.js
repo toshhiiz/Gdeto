@@ -2,7 +2,14 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 const authMiddleware = require('../middleware/authMiddleware');
+
+// Создаем папку uploads если её нет
+const uploadsDir = path.join(__dirname, '../uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
 
 // Настройка multer для загрузки файлов
 const storage = multer.diskStorage({
