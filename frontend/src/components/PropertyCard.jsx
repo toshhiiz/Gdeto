@@ -25,6 +25,9 @@ const PropertyCard = memo(({ property, isList }) => {
     }
   };
 
+  // Check if property was created recently (within last 24 hours)
+  const isNew = property.createdAt && (Date.now() - new Date(property.createdAt).getTime()) < 24 * 60 * 60 * 1000;
+
   if (!isList) {
     return (
       <Link to={`/property/${property.id}`} className="property-card-link">
@@ -37,6 +40,7 @@ const PropertyCard = memo(({ property, isList }) => {
               onError={(e) => e.target.src = '/room.jpg'}
             />
             <div className="compact-deal-type">{property.dealType}</div>
+            {isNew && <div className="new-badge">✨ Новое</div>}
             <button
               onClick={handleToggleFavorite}
               className="favorite-btn"
@@ -81,6 +85,7 @@ const PropertyCard = memo(({ property, isList }) => {
             loading="lazy"
             onError={(e) => e.target.src = '/room.jpg'}
           />
+          {isNew && <div className="new-badge">✨ Новое</div>}
           <div className="photo-count">📷 {property.photoCount}</div>
           <button
             onClick={handleToggleFavorite}
