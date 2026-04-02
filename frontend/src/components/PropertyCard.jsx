@@ -65,7 +65,10 @@ const PropertyCard = memo(({ property, isList }) => {
             </div>
             <div className="compact-title">{property.rooms}-комн., {property.area} м²</div>
             <div className="compact-address">
-              📍 {property.city}, {property.address}
+              📍 {property.city}
+            </div>
+            <div style={{ fontSize: '12px', color: '#6B7280', marginTop: '4px' }}>
+              {property.address}
               {property.complex && <span> • {property.complex}</span>}
             </div>
           </div>
@@ -109,7 +112,8 @@ const PropertyCard = memo(({ property, isList }) => {
             <h3 className="card-main-title">{generatePropertyTitle(property)}</h3>
             <div className="card-main-price">{formatPrice(property.price)}</div>
           </div>
-          <div className="card-address-row">{property.city}, {property.address} {property.complex && `• ${property.complex}`}</div>
+          <div className="card-address-row">📍 <strong>{property.city}</strong></div>
+          <div style={{ fontSize: '12px', color: '#6B7280', marginBottom: '8px' }}>{property.address} {property.complex && `• ${property.complex}`}</div>
           
           <div className="card-meta">
             <span className="author-badge">{property.authorType}</span>

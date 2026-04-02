@@ -12,7 +12,7 @@ export const mockProperties = [
       '/bedroom.jpg',
       '/kitchen1.jpg',
       '/toilet3.jpg'
-    ], coords: [51.0906, 71.4182] 
+    ], coords: [51.1607, 71.4704] // Mangylyk El, Astana
   },
   { 
     id: 2, dealType: 'Продажа', city: 'Алматы', type: 'Квартира', 
@@ -28,7 +28,7 @@ export const mockProperties = [
       '/bedroom1.jpg',
       '/kitchen2.jpg',
       '/toilet2.jpg'
-    ], coords: [43.2189, 76.9297] 
+    ], coords: [43.2381, 76.9453] // Almaty center
   },
   { 
     id: 3, dealType: 'Аренда', rentPeriod: 'Посуточно', city: 'Шымкент', type: 'Квартира', 
@@ -42,7 +42,7 @@ export const mockProperties = [
       '/room2.jpg',
       '/kitchen3.jpg',
       '/toilet3.jpg'
-    ], coords: [42.3155, 69.5869] 
+    ], coords: [42.2977, 69.6047] // Shymkent center
   }
 ];
 

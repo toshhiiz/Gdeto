@@ -24,7 +24,13 @@ const testProperties = [
     address: 'Есильский р-н, Мангилик Ел 40',
     complex: 'ЖК Светлый',
     description: 'Светлая евродвушка в новом доме. Современный минимализм, панорамные окна.',
-    images: ['/room3.jpg', '/bedroom.jpg', '/kitchen1.jpg', '/toilet3.jpg']
+    images: ['/room3.jpg', '/bedroom.jpg', '/kitchen1.jpg', '/toilet3.jpg'],
+    coords: [51.1607, 71.4704], // Mangylyk El, Astana
+    withPets: false,
+    withKids: true,
+    furnished: 'Да',
+    authorType: 'Агентство',
+    views: 342
   },
   {
     dealType: 'Продажа',
@@ -38,7 +44,13 @@ const testProperties = [
     address: 'Бостандыкский р-н, Аль-Фараби 15',
     complex: 'ЖК Premium',
     description: 'Премиальная 3-комнатная квартира с дизайнерским ремонтом. Встроенная техника.',
-    images: ['/room2.jpg', '/room3.jpg', '/bedroom1.jpg', '/kitchen2.jpg', '/toilet2.jpg']
+    images: ['/room2.jpg', '/room3.jpg', '/bedroom1.jpg', '/kitchen2.jpg', '/toilet2.jpg'],
+    coords: [43.2381, 76.9453], // Almaty center
+    withPets: false,
+    withKids: false,
+    furnished: 'Да',
+    authorType: 'Хозяин',
+    views: 890
   },
   {
     dealType: 'Аренда',
@@ -51,8 +63,15 @@ const testProperties = [
     totalFloors: 5,
     price: 12000,
     address: 'Аль-Фарабийский р-н, Тауке хана 43',
+    complex: '',
     description: 'Уютная студия в центре. Есть всё необходимое для комфортного проживания.',
-    images: ['/room2.jpg', '/kitchen3.jpg', '/toilet3.jpg']
+    images: ['/room2.jpg', '/kitchen3.jpg', '/toilet3.jpg'],
+    coords: [42.2977, 69.6047], // Shymkent center
+    withPets: true,
+    withKids: true,
+    furnished: 'Да',
+    authorType: 'Хозяин',
+    views: 156
   }
 ];
 

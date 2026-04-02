@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Property = require('../models/Property');
 const authMiddleware = require('../middleware/authMiddleware');
+const { geocodeAddress } = require('../utils/geocoding');
 
 // Получить все объявления
 router.get('/', async (req, res) => {
@@ -34,7 +35,10 @@ router.get('/:id', async (req, res) => {
 // Создать объявление (требует аутентификации)
 router.post('/', authMiddleware, async (req, res) => {
   try {
-    const { dealType, rentPeriod, propertyType, city, rooms, price, area, address, description, images } = req.body;
+    const { dealType, rentPeriod, propertyType, city, rooms, price, area, address, floor, totalFloors, complex, description, images, withPets, withKids, furnished, authorType } = req.body;
+    
+    // Geocode the address to get coordinates
+    const coords = await geocodeAddress(address, city);
     
     const property = new Property({
       dealType,
@@ -45,8 +49,16 @@ router.post('/', authMiddleware, async (req, res) => {
       price,
       area,
       address,
+      floor,
+      totalFloors,
+      complex,
       description,
       images,
+      coords,
+      withPets: withPets || false,
+      withKids: withKids || false,
+      furnished: furnished || 'Нет',
+      authorType: authorType || 'Хозяин',
       owner: req.userId,
     });
 
@@ -67,6 +79,13 @@ router.put('/:id', authMiddleware, async (req, res) => {
 
     if (property.owner.toString() !== req.userId) {
       return res.status(403).json({ error: 'Нет прав для изменения' });
+    }
+
+    // If address or city changed, re-geocode
+    if (req.body.address || req.body.city) {
+      const address = req.body.address || property.address;
+      const city = req.body.city || property.city;
+      req.body.coords = await geocodeAddress(address, city);
     }
 
     property = await Property.findByIdAndUpdate(

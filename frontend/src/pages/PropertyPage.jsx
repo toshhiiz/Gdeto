@@ -162,9 +162,10 @@ const currentImage = images[currentImg] || images[0] || '/room.jpg';
               <h1 className="property-title text-3xl font-bold text-gray-800 mb-2">
                 {generatePropertyTitle(property)}
               </h1>
-              <p className="property-address text-gray-600 mb-4">
-                📍 {property.city}, {property.address}
-              </p>
+              <div className="property-address text-gray-600 mb-4 space-y-1">
+                <p className="text-lg font-semibold text-gray-800">📍 {property.city}</p>
+                <p className="text-sm text-gray-600">{property.address}</p>
+              </div>
 
               <div className="mb-6">
                 <h3 className="section-title text-lg font-semibold text-gray-800 mb-3">Описание</h3>
@@ -185,10 +186,12 @@ const currentImage = images[currentImg] || images[0] || '/room.jpg';
                     <p className="text-gray-600 text-sm">Площадь</p>
                     <p className="text-xl font-bold text-gray-800">{property.area} м²</p>
                   </div>
-                  <div className="bg-gray-50 p-3 rounded">
-                    <p className="text-gray-600 text-sm">Этаж</p>
-                    <p className="text-xl font-bold text-gray-800">{property.floor}/{property.totalFloors}</p>
-                  </div>
+                  {(property.floor !== undefined && property.totalFloors !== undefined) && (
+                    <div className="bg-gray-50 p-3 rounded">
+                      <p className="text-gray-600 text-sm">Этаж</p>
+                      <p className="text-xl font-bold text-gray-800">{property.floor}/{property.totalFloors}</p>
+                    </div>
+                  )}
                   <div className="bg-gray-50 p-3 rounded">
                     <p className="text-gray-600 text-sm">Статус</p>
                     <p className="text-xl font-bold text-gray-800">{property.dealType}</p>
@@ -257,16 +260,30 @@ const currentImage = images[currentImg] || images[0] || '/room.jpg';
                 <div className="space-y-3">
                   <div>
                     <p className="text-xs text-gray-500">Тип объявления</p>
-                    <p className="font-semibold text-gray-800">{property.authorType}</p>
+                    <p className="font-semibold text-gray-800">{property.authorType || 'Хозяин'}</p>
                   </div>
                   <div>
                     <p className="text-xs text-gray-500">Опубликовано</p>
-                    <p className="font-semibold text-gray-800">{property.date}</p>
+                    <p className="font-semibold text-gray-800">
+                      {property.date || (property.createdAt ? new Date(property.createdAt).toLocaleDateString('ru-RU') : 'Недавно')}
+                    </p>
                   </div>
                   <div>
                     <p className="text-xs text-gray-500">Просмотров</p>
-                    <p className="font-semibold text-gray-800">{property.views}</p>
+                    <p className="font-semibold text-gray-800">{property.views || 0}</p>
                   </div>
+                  {property.complex && (
+                    <div>
+                      <p className="text-xs text-gray-500">Комплекс</p>
+                      <p className="font-semibold text-gray-800">{property.complex}</p>
+                    </div>
+                  )}
+                  {property.furnished && (
+                    <div>
+                      <p className="text-xs text-gray-500">Улучшения</p>
+                      <p className="font-semibold text-gray-800">{property.furnished}</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
