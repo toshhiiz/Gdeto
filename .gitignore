@@ -16,8 +16,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Окружение
-.env
+# Окружение - только локальные переопределения
 .env.local
 .env.*.local
 
