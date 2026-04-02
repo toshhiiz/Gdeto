@@ -5,7 +5,7 @@ export const mockProperties = [
     authorType: 'Агентство', photo: true, photoCount: 4, furnished: 'Да', 
     withPets: false, withKids: true, address: 'Есильский р-н, Мангилик Ел 40', 
     complex: 'ЖК Светлый', description: 'Светлая евродвушка в новом доме. Современный минимализм, панорамные окна.', 
-    date: '1 апр.', views: 342, isHot: true, 
+    date: '1 апр.', views: 342, 
     img: '/room3.jpg', 
     images: [
       '/room3.jpg',
@@ -20,7 +20,7 @@ export const mockProperties = [
     authorType: 'Хозяин', photo: true, photoCount: 5, furnished: 'Да', 
     address: 'Бостандыкский р-н, Аль-Фараби 15', 
     complex: 'ЖК Premium', description: 'Премиальная 3-комнатная квартира с дизайнерским ремонтом. Встроенная техника.', 
-    date: '31 мар.', views: 890, isHot: true, 
+    date: '31 мар.', views: 890, 
     img: '/room2.jpg', 
     images: [
       '/room2.jpg',
@@ -36,7 +36,7 @@ export const mockProperties = [
     authorType: 'Хозяин', photo: true, photoCount: 3, furnished: 'Да', 
     withPets: true, withKids: true, address: 'Аль-Фарабийский р-н, Тауке хана 43', 
     complex: '', description: 'Уютная студия в центре. Есть всё необходимое для комфортного проживания.', 
-    date: '1 апр.', views: 156, isHot: false, 
+    date: '1 апр.', views: 156, 
     img: '/room2.jpg', 
     images: [
       '/room2.jpg',

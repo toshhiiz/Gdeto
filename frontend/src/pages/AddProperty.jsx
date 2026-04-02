@@ -33,7 +33,8 @@ const AddProperty = () => {
     register,
     control,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    setValue
   } = useForm({
     resolver: zodResolver(addPropertySchema),
     defaultValues: {
@@ -51,6 +52,15 @@ const AddProperty = () => {
       totalFloors: 5
     }
   });
+
+  // Reset rentPeriod when dealType changes from Rent to Sale
+  React.useEffect(() => {
+    if (dealType === 'Продажа') {
+      setValue('rentPeriod', '');
+    } else {
+      setValue('rentPeriod', 'Помесячно');
+    }
+  }, [dealType, setValue]);
 
   const { execute: submitProperty, status } = useAsync(async (data) => {
     // Загружаем изображения и получаем их пути
