@@ -6,7 +6,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 // Получить все объявления
 router.get('/', async (req, res) => {
   try {
-    const properties = await Property.find().populate('owner', 'name email phone');
+    const properties = await Property.find().populate('owner', 'name email');
     res.json(properties);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -18,7 +18,7 @@ router.get('/:id', async (req, res) => {
   try {
     const property = await Property.findById(req.params.id).populate('owner');
     if (!property) {
-      return res.status(404).json({ error: 'Property not found' });
+      return res.status(404).json({ error: 'Объявление не найдено' });
     }
     res.json(property);
   } catch (err) {
@@ -29,16 +29,18 @@ router.get('/:id', async (req, res) => {
 // Создать объявление (требует аутентификации)
 router.post('/', authMiddleware, async (req, res) => {
   try {
-    const { title, description, price, location, type, area, rooms, images } = req.body;
+    const { dealType, rentPeriod, propertyType, city, rooms, price, area, address, description, images } = req.body;
     
     const property = new Property({
-      title,
-      description,
-      price,
-      location,
-      type,
-      area,
+      dealType,
+      rentPeriod,
+      propertyType,
+      city,
       rooms,
+      price,
+      area,
+      address,
+      description,
       images,
       owner: req.userId,
     });
@@ -53,17 +55,21 @@ router.post('/', authMiddleware, async (req, res) => {
 // Обновить объявление
 router.put('/:id', authMiddleware, async (req, res) => {
   try {
-    const property = await Property.findById(req.params.id);
+    let property = await Property.findById(req.params.id);
     if (!property) {
-      return res.status(404).json({ error: 'Property not found' });
+      return res.status(404).json({ error: 'Объявление не найдено' });
     }
 
     if (property.owner.toString() !== req.userId) {
-      return res.status(403).json({ error: 'Not authorized' });
+      return res.status(403).json({ error: 'Нет прав для изменения' });
     }
 
-    Object.assign(property, req.body);
-    await property.save();
+    property = await Property.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true }
+    );
+
     res.json(property);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -75,15 +81,15 @@ router.delete('/:id', authMiddleware, async (req, res) => {
   try {
     const property = await Property.findById(req.params.id);
     if (!property) {
-      return res.status(404).json({ error: 'Property not found' });
+      return res.status(404).json({ error: 'Объявление не найдено' });
     }
 
     if (property.owner.toString() !== req.userId) {
-      return res.status(403).json({ error: 'Not authorized' });
+      return res.status(403).json({ error: 'Нет прав для удаления' });
     }
 
-    await Property.deleteOne({ _id: req.params.id });
-    res.json({ message: 'Property deleted' });
+    await Property.findByIdAndRemove(req.params.id);
+    res.json({ msg: 'Объявление удалено' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
