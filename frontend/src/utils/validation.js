@@ -54,7 +54,8 @@ export const addPropertySchema = z.object({
   furnished: z.string().optional(),
   rentPeriod: z.string().optional(),
   floor: z.number().optional(),
-  totalFloors: z.number().optional()
+  totalFloors: z.number().optional(),
+  isHot: z.boolean().optional()
 });
 
 // Filter values validation
