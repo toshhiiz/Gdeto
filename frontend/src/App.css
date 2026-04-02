@@ -668,14 +668,15 @@ input:focus, select:focus, textarea:focus {
   position: absolute;
   top: 12px;
   left: 12px;
-  background: var(--primary);
+  background: rgba(0, 0, 0, 0.85);
   color: white;
-  padding: 4px 10px;
+  padding: 6px 12px;
   border-radius: 4px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   z-index: 2;
-  box-shadow: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  backdrop-filter: blur(4px);
 }
 
 .photo-count {
@@ -1297,14 +1298,16 @@ input:focus, select:focus, textarea:focus {
 ========================================= */
 .new-badge {
   position: absolute;
-  top: 8px;
-  left: 8px;
+  top: 12px;
+  right: 12px;
   background: linear-gradient(135deg, #10b981, #059669);
   color: white;
-  padding: 4px 12px;
+  padding: 6px 14px;
   border-radius: 20px;
   font-size: 12px;
   font-weight: 600;
+  z-index: 3;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
 /* =========================================

@@ -39,7 +39,6 @@ const PropertyCard = memo(({ property, isList }) => {
               loading="lazy"
               onError={(e) => e.target.src = '/room.jpg'}
             />
-            <div className="compact-deal-type">{property.dealType}</div>
             {isNew && <div className="new-badge">✨ Новое</div>}
             <button
               onClick={handleToggleFavorite}
