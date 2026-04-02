@@ -9,7 +9,9 @@ import { TOAST_MESSAGES } from '../constants/config';
 const PropertyCard = memo(({ property, isList }) => {
   const { isFavorite, toggleFavorite } = useFavorites();
   const { showSuccess, showInfo } = useNotification();
-  const imageUrl = property.img || property.images?.[0] || '/room.jpg';
+  const BACKEND_URL = 'https://gdeto.up.railway.app';
+  const rawImg = property.img || property.images?.[0] || '/room.jpg';
+  const imageUrl = rawImg.startsWith('uploads') ? `${BACKEND_URL}/${rawImg}` : rawImg;
   const isFav = isFavorite(property.id);
 
   const handleToggleFavorite = (e) => {
