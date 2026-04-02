@@ -1,4 +1,4 @@
-import { API_BASE_URL, API_ENDPOINTS } from '../constants/config';
+import { API_URL, API_ENDPOINTS } from '../constants/config';
 import { getToken } from '../utils/storage';
 
 class ApiClient {
@@ -79,7 +79,7 @@ class ApiClient {
 }
 
 // Create API client instance
-export const apiClient = new ApiClient(API_BASE_URL);
+export const apiClient = new ApiClient(API_URL);
 
 // Properties API
 export const propertiesApi = {
