@@ -1,8 +1,9 @@
-import React, { useState, memo } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { mockProperties, generateTitle } from '../data';
+import { propertiesApi } from '../api/client';
 import { useFavorites } from '../context/FavoritesContext';
 import { useNotification } from '../context/NotificationContext';
 import { Button } from '../components/UI/Button';
@@ -12,20 +13,48 @@ import { TOAST_MESSAGES, AUTHOR_TYPES } from '../constants/config';
 import L from 'leaflet';
 
 // Fix Leaflet icon
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-});
+if (typeof L !== 'undefined' && L.Icon && L.Icon.Default) {
+  delete L.Icon.Default.prototype._getIconUrl;
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+    iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+    shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  });
+}
 
 const PropertyPage = () => {
   const { id } = useParams();
-  const property = mockProperties.find(p => p.id === parseInt(id));
+  const [property, setProperty] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [currentImg, setCurrentImg] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const { isFavorite, toggleFavorite } = useFavorites();
   const { showSuccess, showInfo } = useNotification();
+
+  useEffect(() => {
+    const fetchProperty = async () => {
+      setIsLoading(true);
+      try {
+        const data = await propertiesApi.getById(id);
+        setProperty(data);
+      } catch (error) {
+        console.error('Error loading property:', error);
+        const mockProperty = mockProperties.find(p => p.id === parseInt(id));
+        setProperty(mockProperty);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProperty();
+  }, [id]);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p>Загрузка...</p>
+      </div>
+    );
+  }
 
   if (!property) {
     return (
@@ -40,7 +69,7 @@ const PropertyPage = () => {
     );
   }
 
-  const images = property.images?.length ? property.images : [property.img].filter(Boolean);
+  const images = property.images?.length ? property.images : (property.img ? [property.img] : ['/room.jpg']);
   const currentImage = images[currentImg] || images[0] || '/room.jpg';
   const isFav = isFavorite(property.id);
 

@@ -43,8 +43,9 @@ const HomePage = () => {
       setIsLoading(true);
       try {
         const data = await propertiesApi.getAll();
-        setProperties(data);
+        setProperties(Array.isArray(data) ? data : (data.properties || []));
       } catch (error) {
+        console.error('Error fetching properties:', error);
         setProperties(mockProperties);
       } finally {
         setIsLoading(false);
