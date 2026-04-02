@@ -18,6 +18,7 @@ const AddProperty = () => {
   const { user, isAuthenticated } = useAuth();
   const { showSuccess, showError } = useNotification();
   const [images, setImages] = useState([]);
+  const [imageError, setImageError] = useState('');
   const [dealType, setDealType] = useState('Аренда');
 
   // Redirect if not authenticated
@@ -124,6 +125,16 @@ const AddProperty = () => {
         return;
       }
 
+      if (imageError) {
+        showError('Исправьте ошибки в фотографиях');
+        return;
+      }
+
+      // Для сделок "Продажа" не требуется rentPeriod
+      if (data.dealType === 'Продажа') {
+        delete data.rentPeriod;
+      }
+
       await submitProperty(data);
       showSuccess('Объявление успешно создано!');
       navigate('/');
@@ -134,7 +145,38 @@ const AddProperty = () => {
 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
-    const newImages = files.map(file => ({
+    setImageError('');
+
+    // Валидация файлов
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+    const MAX_IMAGES = 6;
+    const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+
+    // Проверка количества существующих фото
+    if (images.length + files.length > MAX_IMAGES) {
+      setImageError(`Максимум ${MAX_IMAGES} фотографий. Вы уже загрузили ${images.length}.`);
+      return;
+    }
+
+    const validFiles = [];
+    for (const file of files) {
+      // Проверка типа файла
+      if (!ALLOWED_TYPES.includes(file.type)) {
+        setImageError(`Файл "${file.name}" имеет недопустимый формат. Используйте JPG, PNG или WebP.`);
+        return;
+      }
+
+      // Проверка размера
+      if (file.size > MAX_FILE_SIZE) {
+        setImageError(`Файл "${file.name}" слишком большой. Максимум 5MB.`);
+        return;
+      }
+
+      validFiles.push(file);
+    }
+
+    // Если все валидно, добавляем фото
+    const newImages = validFiles.map(file => ({
       id: Math.random(),
       file,
       preview: URL.createObjectURL(file)
@@ -331,10 +373,24 @@ const AddProperty = () => {
               />
             </label>
 
+            {imageError && (
+              <div style={{ 
+                color: '#DC2626', 
+                fontSize: '13px', 
+                marginTop: '12px',
+                padding: '12px',
+                backgroundColor: '#FEE2E2',
+                borderRadius: 'var(--radius)',
+                border: '1px solid #FECACA'
+              }}>
+                ❌ {imageError}
+              </div>
+            )}
+
             {images.length > 0 && (
               <div style={{ marginTop: '24px' }}>
                 <p style={{ fontSize: '14px', fontWeight: '600', color: 'var(--text-main)', marginBottom: '12px' }}>
-                  Загруженные фото ({images.length})
+                  Загруженные фото ({images.length}/6)
                 </p>
                 <div className="image-gallery">
                   {images.map(image => (
