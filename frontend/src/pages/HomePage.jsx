@@ -130,6 +130,23 @@ const HomePage = () => {
       <section className="hero">
         <div className="hero-content">
           <h1>Недвижимость в Казахстане</h1>
+          <p>Найдите свой идеальный дом быстро и безопасно</p>
+          
+          <div className="hero-stats">
+            <div className="hero-stat">
+              <span className="hero-stat-number">{properties.length}+</span>
+              <span className="hero-stat-label">Объявлений</span>
+            </div>
+            <div className="hero-stat">
+              <span className="hero-stat-number">5</span>
+              <span className="hero-stat-label">Городов</span>
+            </div>
+            <div className="hero-stat">
+              <span className="hero-stat-number">100%</span>
+              <span className="hero-stat-label">Безопасно</span>
+            </div>
+          </div>
+          
           <Filter 
             dealType={dealType} setDealType={setDealType} 
             rentPeriod={rentPeriod} setRentPeriod={setRentPeriod}
@@ -160,18 +177,53 @@ const HomePage = () => {
       </section>
 
       {!isSearched ? (
-        <section className="home-section">
-          <div className="section-header"><h2>Последние объявления</h2></div>
-          <div className="compact-grid">
-            {isLoading ? (
-              <ListCardSkeleton />
-            ) : (
-              Array.isArray(properties) ? properties.slice(0, 6).map(p => (
-                <PropertyCard key={p.id} property={p} isList={false} />
-              )) : <p>Загрузка...</p>
-            )}
-          </div>
-        </section>
+        <>
+          <section className="home-section">
+            <div className="section-header"><h2>Последние объявления</h2></div>
+            <div className="compact-grid">
+              {isLoading ? (
+                <ListCardSkeleton />
+              ) : (
+                Array.isArray(properties) ? properties.slice(0, 6).map(p => (
+                  <PropertyCard key={p.id} property={p} isList={false} />
+                )) : <p>Загрузка...</p>
+              )}
+            </div>
+          </section>
+
+          <section className="why-section">
+            <div className="why-container">
+              <h2 className="why-title">Почему Гдето?</h2>
+              <p className="why-subtitle">Мы делаем поиск недвижимости простым, быстрым и безопасным</p>
+              
+              <div className="why-grid">
+                <div className="why-card">
+                  <span className="why-icon">⚡</span>
+                  <h3 className="why-card-title">Быстро и просто</h3>
+                  <p className="why-card-desc">Найдите квартиру или дом за несколько минут с помощью удобного фильтра</p>
+                </div>
+                
+                <div className="why-card">
+                  <span className="why-icon">🔒</span>
+                  <h3 className="why-card-title">100% Безопасно</h3>
+                  <p className="why-card-desc">Проверенные объявления и защита ваших данных - приоритет для нас</p>
+                </div>
+                
+                <div className="why-card">
+                  <span className="why-icon">💰</span>
+                  <h3 className="why-card-title">Совершенно Бесплатно</h3>
+                  <p className="why-card-desc">Размещайте объявления и ищите недвижимость без комиссий и скрытых платежей</p>
+                </div>
+                
+                <div className="why-card">
+                  <span className="why-icon">📱</span>
+                  <h3 className="why-card-title">Всегда С Вами</h3>
+                  <p className="why-card-desc">Доступ к объявлениям 24/7 с любого устройства в любое время</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </>
       ) : (
         <section className="listings-section">
           <div className="section-header" style={{ alignItems: 'center' }}>

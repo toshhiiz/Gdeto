@@ -8,6 +8,7 @@ import { AuthProvider } from './context/AuthContext';
 import { FavoritesProvider } from './context/FavoritesContext';
 import { NotificationProvider } from './context/NotificationContext';
 import ErrorBoundary from './components/ErrorBoundary';
+import Footer from './components/Footer';
 
 import HomePage from './pages/HomePage';
 import Login from './pages/Login';
@@ -38,12 +39,7 @@ function AppContent() {
         </Routes>
       </main>
       
-      <footer className="footer">
-        <div className="footer-content">
-          <div className="footer-logo">Гдето<span>.</span></div>
-          <p>&copy; 2026 Проект «Гдето».</p>
-        </div>
-      </footer>
+      <Footer />
       <ToastContainer />
     </div>
   );
