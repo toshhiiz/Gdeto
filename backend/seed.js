@@ -25,11 +25,14 @@ const testProperties = [
     complex: 'ЖК Светлый',
     description: 'Светлая евродвушка в новом доме. Современный минимализм, панорамные окна.',
     images: ['/room3.jpg', '/bedroom.jpg', '/kitchen1.jpg', '/toilet3.jpg'],
-    coords: [51.1607, 71.4704], // Mangylyk El, Astana
+    coords: [51.1607, 71.4704],
     withPets: false,
     withKids: true,
     furnished: 'Да',
     authorType: 'Агентство',
+    sellerName: 'Реал Эстейт Агентство',
+    phone: '+7 (700) 123-45-67',
+    email: 'info@realagency.kz',
     views: 342
   },
   {
@@ -45,11 +48,14 @@ const testProperties = [
     complex: 'ЖК Premium',
     description: 'Премиальная 3-комнатная квартира с дизайнерским ремонтом. Встроенная техника.',
     images: ['/room2.jpg', '/room3.jpg', '/bedroom1.jpg', '/kitchen2.jpg', '/toilet2.jpg'],
-    coords: [43.2381, 76.9453], // Almaty center
+    coords: [43.2381, 76.9453],
     withPets: false,
     withKids: false,
     furnished: 'Да',
     authorType: 'Хозяин',
+    sellerName: 'Марат Иманов',
+    phone: '+7 (701) 987-65-43',
+    email: 'marat.imanov@gmail.com',
     views: 890
   },
   {
@@ -66,11 +72,14 @@ const testProperties = [
     complex: '',
     description: 'Уютная студия в центре. Есть всё необходимое для комфортного проживания.',
     images: ['/room2.jpg', '/kitchen3.jpg', '/toilet3.jpg'],
-    coords: [42.2977, 69.6047], // Shymkent center
+    coords: [42.2977, 69.6047],
     withPets: true,
     withKids: true,
     furnished: 'Да',
     authorType: 'Хозяин',
+    sellerName: 'Алиса Серикова',
+    phone: '+7 (702) 555-88-99',
+    email: 'alisa.serikova@mail.kz',
     views: 156
   }
 ];

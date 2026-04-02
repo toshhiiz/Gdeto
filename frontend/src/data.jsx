@@ -5,14 +5,17 @@ export const mockProperties = [
     authorType: 'Агентство', photo: true, photoCount: 4, furnished: 'Да', 
     withPets: false, withKids: true, address: 'Есильский р-н, Мангилик Ел 40', 
     complex: 'ЖК Светлый', description: 'Светлая евродвушка в новом доме. Современный минимализм, панорамные окна.', 
-    date: '1 апр.', views: 342, 
+    date: '1 апр.', views: 342,
+    sellerName: 'Реал Эстейт Агентство',
+    phone: '+7 (700) 123-45-67',
+    email: 'info@realagency.kz',
     img: '/room3.jpg', 
     images: [
       '/room3.jpg',
       '/bedroom.jpg',
       '/kitchen1.jpg',
       '/toilet3.jpg'
-    ], coords: [51.1607, 71.4704] // Mangylyk El, Astana
+    ], coords: [51.1607, 71.4704]
   },
   { 
     id: 2, dealType: 'Продажа', city: 'Алматы', type: 'Квартира', 
@@ -20,7 +23,10 @@ export const mockProperties = [
     authorType: 'Хозяин', photo: true, photoCount: 5, furnished: 'Да', 
     address: 'Бостандыкский р-н, Аль-Фараби 15', 
     complex: 'ЖК Premium', description: 'Премиальная 3-комнатная квартира с дизайнерским ремонтом. Встроенная техника.', 
-    date: '31 мар.', views: 890, 
+    date: '31 мар.', views: 890,
+    sellerName: 'Марат Иманов',
+    phone: '+7 (701) 987-65-43',
+    email: 'marat.imanov@gmail.com',
     img: '/room2.jpg', 
     images: [
       '/room2.jpg',
@@ -28,7 +34,7 @@ export const mockProperties = [
       '/bedroom1.jpg',
       '/kitchen2.jpg',
       '/toilet2.jpg'
-    ], coords: [43.2381, 76.9453] // Almaty center
+    ], coords: [43.2381, 76.9453]
   },
   { 
     id: 3, dealType: 'Аренда', rentPeriod: 'Посуточно', city: 'Шымкент', type: 'Квартира', 
@@ -36,13 +42,16 @@ export const mockProperties = [
     authorType: 'Хозяин', photo: true, photoCount: 3, furnished: 'Да', 
     withPets: true, withKids: true, address: 'Аль-Фарабийский р-н, Тауке хана 43', 
     complex: '', description: 'Уютная студия в центре. Есть всё необходимое для комфортного проживания.', 
-    date: '1 апр.', views: 156, 
+    date: '1 апр.', views: 156,
+    sellerName: 'Алиса Серикова',
+    phone: '+7 (702) 555-88-99',
+    email: 'alisa.serikova@mail.kz',
     img: '/room2.jpg', 
     images: [
       '/room2.jpg',
       '/kitchen3.jpg',
       '/toilet3.jpg'
-    ], coords: [42.2977, 69.6047] // Shymkent center
+    ], coords: [42.2977, 69.6047]
   }
 ];
 

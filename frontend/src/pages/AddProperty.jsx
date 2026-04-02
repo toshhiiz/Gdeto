@@ -367,6 +367,33 @@ const AddProperty = () => {
             </div>
           </div>
 
+          {/* Seller Contact Information */}
+          <div className="form-section">
+            <h3>Ваши контакты</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Input
+                label="Имя (или название агентства)"
+                placeholder="Введите ваше имя"
+                error={errors.sellerName?.message}
+                {...register('sellerName')}
+              />
+              <Input
+                label="Телефон"
+                type="tel"
+                placeholder="+7 (700) 123-45-67"
+                error={errors.phone?.message}
+                {...register('phone')}
+              />
+              <Input
+                label="Email"
+                type="email"
+                placeholder="example@email.com"
+                error={errors.email?.message}
+                {...register('email')}
+              />
+            </div>
+          </div>
+
           {/* Image Upload */}
           <div className="form-section">
             <h3>Фотографии</h3>

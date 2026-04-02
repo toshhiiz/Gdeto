@@ -259,10 +259,63 @@ const currentImage = images[currentImg] || images[0] || '/room.jpg';
                 {isFav ? '❤️ В избранном' : '🤍 В избранное'}
               </Button>
 
+              {/* Seller Contact Card */}
+              <div className="bg-white rounded-lg shadow-md p-6 border-t-4 border-green-500">
+                <p className="text-gray-800 font-semibold mb-4">Контакты продавца</p>
+                <div className="space-y-3 mb-4">
+                  {property.sellerName && (
+                    <div>
+                      <p className="text-xs text-gray-500">Имя продавца</p>
+                      <p className="font-semibold text-gray-800">{property.sellerName}</p>
+                    </div>
+                  )}
+                  {property.phone && (
+                    <div>
+                      <p className="text-xs text-gray-500">Телефон</p>
+                      <p className="font-semibold text-lg text-gray-800">{property.phone}</p>
+                    </div>
+                  )}
+                  {property.email && (
+                    <div>
+                      <p className="text-xs text-gray-500">Email</p>
+                      <p className="font-semibold text-gray-800 break-all">{property.email}</p>
+                    </div>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  {property.phone && (
+                    <a
+                      href={`tel:${property.phone.replace(/\s/g, '')}`}
+                      className="block w-full bg-green-600 text-white font-semibold py-3 px-4 rounded-lg text-center hover:bg-green-700 transition-colors"
+                    >
+                      ☎️ Позвонить
+                    </a>
+                  )}
+                  {property.email && (
+                    <a
+                      href={`mailto:${property.email}`}
+                      className="block w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg text-center hover:bg-blue-700 transition-colors"
+                    >
+                      ✉️ Написать письмо
+                    </a>
+                  )}
+                  {property.phone && (
+                    <a
+                      href={`https://wa.me/${property.phone.replace(/\D/g, '')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full bg-teal-600 text-white font-semibold py-3 px-4 rounded-lg text-center hover:bg-teal-700 transition-colors"
+                    >
+                      💬 WhatsApp
+                    </a>
+                  )}
+                </div>
+              </div>
+
               {/* Contact Card */}
               <div className="bg-white rounded-lg shadow-md p-6">
                 <p className="text-gray-600 text-sm mb-2">Информация</p>
-                <div className="space-y-3">
+                <div className="space-y-3"">
                   <div>
                     <p className="text-xs text-gray-500">Тип объявления</p>
                     <p className="font-semibold text-gray-800">{property.authorType || 'Хозяин'}</p>

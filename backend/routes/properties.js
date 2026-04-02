@@ -35,7 +35,7 @@ router.get('/:id', async (req, res) => {
 // Создать объявление (требует аутентификации)
 router.post('/', authMiddleware, async (req, res) => {
   try {
-    const { dealType, rentPeriod, propertyType, city, rooms, price, area, address, floor, totalFloors, complex, description, images, withPets, withKids, furnished, authorType } = req.body;
+    const { dealType, rentPeriod, propertyType, city, rooms, price, area, address, floor, totalFloors, complex, description, images, withPets, withKids, furnished, authorType, sellerName, phone, email } = req.body;
     
     // Geocode the address to get coordinates
     const coords = await geocodeAddress(address, city);
@@ -59,6 +59,9 @@ router.post('/', authMiddleware, async (req, res) => {
       withKids: withKids || false,
       furnished: furnished || 'Нет',
       authorType: authorType || 'Хозяин',
+      sellerName,
+      phone,
+      email,
       owner: req.userId,
     });
 

@@ -19,6 +19,9 @@ const PropertySchema = new mongoose.Schema({
   withKids: { type: Boolean, default: false },
   furnished: { type: String, default: 'Нет' }, // 'Да'/'Нет'
   authorType: { type: String, default: 'Хозяин' }, // 'Хозяин'/'Агентство'
+  sellerName: { type: String }, // Имя продавца/агентства
+  phone: { type: String }, // Телефон продавца
+  email: { type: String }, // Email продавца
   views: { type: Number, default: 0 },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   createdAt: { type: Date, default: Date.now }

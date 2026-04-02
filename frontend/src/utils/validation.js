@@ -54,7 +54,10 @@ export const addPropertySchema = z.object({
   furnished: z.string().optional(),
   rentPeriod: z.string().optional(),
   floor: z.number().optional(),
-  totalFloors: z.number().optional()
+  totalFloors: z.number().optional(),
+  sellerName: z.string().min(2, 'Имя минимум 2 символа').max(100, 'Имя максимум 100 символов').optional().or(z.literal('')),
+  phone: z.string().min(6, 'Введите корректный номер').optional().or(z.literal('')),
+  email: z.string().email('Введите корректный email').optional().or(z.literal(''))
 });
 
 // Filter values validation
