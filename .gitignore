@@ -21,6 +21,10 @@ pnpm-debug.log*
 .env.local
 .env.*.local
 
+# Загруженные файлы
+backend/uploads/*
+!backend/uploads/.gitkeep
+
 # Редакторы
 .vscode/*
 !.vscode/extensions.json
