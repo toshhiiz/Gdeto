@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const authMiddleware = require('../middleware/authMiddleware');
 
 // Регистрация
 router.post('/register', async (req, res) => {
@@ -33,6 +34,16 @@ router.post('/login', async (req, res) => {
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
     res.json({ token, user: { id: user._id, name: user.name, email } });
+  } catch (err) {
+    res.status(500).send('Ошибка сервера');
+  }
+});
+
+// Получить текущего пользователя
+router.get('/me', authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select('-password');
+    res.json(user);
   } catch (err) {
     res.status(500).send('Ошибка сервера');
   }

@@ -29,7 +29,7 @@ router.get('/:id', async (req, res) => {
 // Создать объявление (требует аутентификации)
 router.post('/', authMiddleware, async (req, res) => {
   try {
-    const { dealType, rentPeriod, propertyType, city, rooms, price, area, address, description, images } = req.body;
+    const { dealType, rentPeriod, propertyType, city, rooms, price, area, address, description, images, isHot } = req.body;
     
     const property = new Property({
       dealType,
@@ -42,6 +42,7 @@ router.post('/', authMiddleware, async (req, res) => {
       address,
       description,
       images,
+      isHot,
       owner: req.userId,
     });
 
@@ -88,7 +89,7 @@ router.delete('/:id', authMiddleware, async (req, res) => {
       return res.status(403).json({ error: 'Нет прав для удаления' });
     }
 
-    await Property.findByIdAndRemove(req.params.id);
+    await Property.findByIdAndDelete(req.params.id);
     res.json({ msg: 'Объявление удалено' });
   } catch (err) {
     res.status(500).json({ error: err.message });
