@@ -4,18 +4,29 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { addPropertySchema } from '../utils/validation';
 import { useNotification } from '../context/NotificationContext';
+import { useAuth } from '../context/AuthContext';
 import { useAsync } from '../hooks/useAsync';
 import { Input } from '../components/UI/Input';
 import { Select } from '../components/UI/Select';
 import { Button } from '../components/UI/Button';
 import { Alert } from '../components/UI/Alert';
-import { PROPERTY_TYPES, DEAL_TYPES, RENT_PERIODS, KAZAKHSTAN_CITIES, TOAST_MESSAGES } from '../constants/config';
+import { PROPERTY_TYPES, DEAL_TYPES, RENT_PERIODS, KAZAKHSTAN_CITIES, TOAST_MESSAGES, API_URL } from '../constants/config';
+import { getToken } from '../utils/storage';
 
 const AddProperty = () => {
   const navigate = useNavigate();
+  const { user, isAuthenticated } = useAuth();
   const { showSuccess, showError } = useNotification();
   const [images, setImages] = useState([]);
   const [dealType, setDealType] = useState('Аренда');
+
+  // Redirect if not authenticated
+  React.useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/');
+      showError('Вы должны быть авторизованы для создания объявления');
+    }
+  }, [isAuthenticated, navigate, showError]);
 
   const {
     register,
@@ -43,25 +54,37 @@ const AddProperty = () => {
   const { execute: submitProperty, status } = useAsync(async (data) => {
     // Загружаем изображения и получаем их пути
     const imagePaths = [];
+    const token = getToken();
+    
+    if (!token) {
+      throw new Error('Токен не найден. Пожалуйста, авторизуйтесь.');
+    }
     
     for (const image of images) {
       if (image.file) {
         try {
           const formData = new FormData();
           formData.append('file', image.file);
-          const uploadResponse = await fetch('https://gdeto.up.railway.app/api/upload', {
+          const uploadResponse = await fetch(`${API_URL}/upload`, {
             method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            },
             body: formData
           });
           
           if (uploadResponse.ok) {
             const uploadedData = await uploadResponse.json();
-            if (uploadedData.path) {
-              imagePaths.push(uploadedData.path);
+            if (uploadedData.url) {
+              imagePaths.push(uploadedData.url);
             }
+          } else {
+            const errorData = await uploadResponse.json();
+            throw new Error(`Ошибка загрузки: ${errorData.error || uploadResponse.status}`);
           }
         } catch (error) {
           console.error('Error uploading image:', error);
+          throw error;
         }
       }
     }
@@ -77,17 +100,18 @@ const AddProperty = () => {
       totalFloors: parseInt(data.totalFloors)
     };
 
-    const response = await fetch('https://gdeto.up.railway.app/api/properties', {
+    const response = await fetch(`${API_URL}/properties`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('gdeto_token')}`
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(propertyData)
     });
 
     if (!response.ok) {
-      throw new Error('Ошибка при создании объявления');
+      const errorData = await response.json();
+      throw new Error(errorData.msg || 'Ошибка при создании объявления');
     }
 
     return await response.json();
