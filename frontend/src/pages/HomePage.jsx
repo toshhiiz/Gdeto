@@ -44,8 +44,13 @@ const HomePage = () => {
       try {
         const data = await propertiesApi.getAll();
         const properties = Array.isArray(data) ? data : (data.properties || []);
+        // Normalize properties: ensure they have an 'id' field
+        const normalized = properties.map(p => ({
+          ...p,
+          id: p.id || p._id, // Use _id from MongoDB if id doesn't exist
+        }));
         // If API returned empty array, use mock properties as fallback
-        setProperties(properties.length > 0 ? properties : mockProperties);
+        setProperties(normalized.length > 0 ? normalized : mockProperties);
       } catch (error) {
         console.error('Error fetching properties:', error);
         setProperties(mockProperties);

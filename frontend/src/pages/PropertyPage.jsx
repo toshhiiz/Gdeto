@@ -36,7 +36,12 @@ const PropertyPage = () => {
       setIsLoading(true);
       try {
         const data = await propertiesApi.getById(id);
-        setProperty(data);
+        // Normalize the property to have an 'id' field
+        const normalizedData = {
+          ...data,
+          id: data.id || data._id,
+        };
+        setProperty(normalizedData);
       } catch (error) {
         console.error('Error loading property:', error);
         // Try to find in mock properties by numeric ID
