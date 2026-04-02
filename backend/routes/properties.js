@@ -16,7 +16,12 @@ router.get('/', async (req, res) => {
 // Получить одно объявление
 router.get('/:id', async (req, res) => {
   try {
-    const property = await Property.findById(req.params.id).populate('owner');
+    const { id } = req.params;
+    // Validate if it's a valid MongoDB ObjectId
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(404).json({ error: 'Объявление не найдено' });
+    }
+    const property = await Property.findById(id).populate('owner');
     if (!property) {
       return res.status(404).json({ error: 'Объявление не найдено' });
     }

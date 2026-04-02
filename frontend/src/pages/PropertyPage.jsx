@@ -39,8 +39,10 @@ const PropertyPage = () => {
         setProperty(data);
       } catch (error) {
         console.error('Error loading property:', error);
-        const mockProperty = mockProperties.find(p => p.id === parseInt(id));
-        setProperty(mockProperty);
+        // Try to find in mock properties by numeric ID
+        const mockProperty = mockProperties.find(p => p.id === parseInt(id) || p.id == id);
+        // If not found, use first mock property as fallback
+        setProperty(mockProperty || mockProperties[0]);
       } finally {
         setIsLoading(false);
       }
