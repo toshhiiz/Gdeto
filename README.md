@@ -16,7 +16,7 @@
 ### Frontend
 
 ```bash
-cd gdeto-frontend
+cd frontend
 npm install
 npm run dev
 ```
@@ -25,38 +25,41 @@ npm run dev
 
 ### Backend
 
-Используйте спецификацию в `BACKEND_API_SPEC.md`:
-
 ```bash
-mkdir gdeto-backend
-cd gdeto-backend
-npm init -y
-npm install express mongoose jsonwebtoken bcryptjs cors dotenv multer
-# Следуйте BACKEND_API_SPEC.md
+cd backend
+npm install
 npm start
 ```
 
 Запустится на: `http://localhost:3000`
 
+**Полная документация**: см. `docs/START_HERE.md`
+
 ## 📁 Структура
 
 ```
-gdeto-frontend/          # React приложение
-├── src/
-│   ├── components/      # UI компоненты
-│   ├── pages/          # Страницы
-│   ├── hooks/          # Custom hooks
-│   ├── context/        # Global state
-│   ├── api/            # API client
-│   └── utils/          # Утилиты
-├── package.json
-└── vite.config.js
-
-BACKEND_API_SPEC.md     # API спецификация для бэкенда
-DEVELOPMENT_GUIDE.md    # Архитектура и интеграция
-START_HERE.md          # Начните отсюда
-IMPLEMENTATION_CHECKLIST.md
-FRONTEND_SETUP.md
+gdeto/
+├── frontend/            # React приложение
+│   ├── src/
+│   │   ├── components/  # UI компоненты
+│   │   ├── pages/       # Страницы
+│   │   ├── hooks/       # Custom hooks
+│   │   ├── context/     # Global state
+│   │   ├── api/         # API client
+│   │   └── utils/       # Утилиты
+│   └── package.json
+│
+├── backend/             # Node.js API (планируется)
+│
+├── docs/                # Документация
+│   ├── BACKEND_API_SPEC.md
+│   ├── DEVELOPMENT_GUIDE.md
+│   ├── FRONTEND_SETUP.md
+│   ├── IMPLEMENTATION_CHECKLIST.md
+│   └── START_HERE.md
+│
+├── ARCHITECTURE.md      # Описание архитектуры
+└── README.md
 ```
 
 ## 🎨 Дизайн
@@ -68,12 +71,12 @@ FRONTEND_SETUP.md
 
 ## 📚 Документация
 
-1. **START_HERE.md** - 👈 Начните отсюда
-2. **BACKEND_API_SPEC.md** - Полная спецификация API
-3. **DEVELOPMENT_GUIDE.md** - Архитектура проекта
-4. **IMPLEMENTATION_CHECKLIST.md** - Чек-лист разработки
-5. **FRONTEND_SETUP.md** - Конфигурация
-6. **README_IMPROVED.md** - Подробный обзор
+1. **docs/START_HERE.md** - 👈 Начните отсюда
+2. **docs/BACKEND_API_SPEC.md** - Полная спецификация API
+3. **docs/DEVELOPMENT_GUIDE.md** - Архитектура проекта
+4. **docs/IMPLEMENTATION_CHECKLIST.md** - Чек-лист разработки
+5. **docs/FRONTEND_SETUP.md** - Конфигурация
+6. **ARCHITECTURE.md** - Структура проекта
 
 ## 🛠 Технологический стек
 
