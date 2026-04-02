@@ -43,7 +43,9 @@ const HomePage = () => {
       setIsLoading(true);
       try {
         const data = await propertiesApi.getAll();
-        setProperties(Array.isArray(data) ? data : (data.properties || []));
+        const properties = Array.isArray(data) ? data : (data.properties || []);
+        // If API returned empty array, use mock properties as fallback
+        setProperties(properties.length > 0 ? properties : mockProperties);
       } catch (error) {
         console.error('Error fetching properties:', error);
         setProperties(mockProperties);
